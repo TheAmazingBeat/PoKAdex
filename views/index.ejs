@@ -6,12 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pokedex</title>
     <link rel="stylesheet" href="styles/style.css" />
-    <script src="script.js"></script>
   </head>
   <body>
     <main>
       <div class="container">
-        <h1>Pokedex</h1>
+        <div id="dex">
+          <h1>Pokedex</h1>
+        <% data.forEach((pokemon)=>{%>
+        <div class="poke-container">
+          <h2 class="pokemon-name"><%= pokemon.name %></h2>
+        </div>
+        <%}) %> 
+        </div>
+        
+
         <button id="more">More</button>
       </div>
     </main>
