@@ -13,19 +13,36 @@
         <h1>Pokedex</h1>
         <div id="dex">
           <% if(dex.length == 0) {%>
-          <p style="text-align: center;"><%= 'Pokedex was not found' %></p>
+          <p style="text-align: center"><%= 'Pokedex was not found' %></p>
           <% } %> <% dex.forEach((pokemon)=>{%>
           <div class="poke-container">
-            <p class="pokemon-id"><%= `#${pokemon.id}` %> </p>
+            <p class="pokemon-id"><%= `#${pokemon.id}` %></p>
             <h2 class="pokemon-name">
-              <%= `${pokemon.name.charAt(0).toUpperCase()}${pokemon.name.slice(1)}` %>
+              <%=
+              `${pokemon.name.charAt(0).toUpperCase()}${pokemon.name.slice(1)}`
+              %>
             </h2>
-            <img class="pokemon-image" src="<%- pokemon.image %> "  alt="Picture of <%- pokemon.name %> " >
+            <img
+              class="pokemon-image"
+              src="<%- pokemon.image %> "
+              alt="Picture of <%- pokemon.name %> "
+              loading="lazy"
+            />
+            <div class="pokemon-types">
+              <% pokemon.typeArray.forEach(t => { %> <% let whatType = '' %> <%
+              types.forEach(element => { %> <% if(element == t.type.name)
+              whatType = element; %> <% }) %>
+              <div class="type <%- whatType %>"><%= t.type.name %></div>
+              <% }) %>
+            </div>
           </div>
           <%}) %>
+
+          <% offset += 20 %>
+          <a href="/<%- offset %>" id="moreBtn"> More ></a>
         </div>
 
-        <button id="more">More</button>
+        
       </div>
     </main>
   </body>

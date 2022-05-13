@@ -11,6 +11,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get('/', pokedex);
 
+app.get('/:offset', pokedex);
+
 const PORT = 3000;
 app.listen(process.env.PORT || PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
