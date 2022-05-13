@@ -16,10 +16,11 @@
           <p style="text-align: center;"><%= 'Pokedex was not found' %></p>
           <% } %> <% dex.forEach((pokemon)=>{%>
           <div class="poke-container">
+            <p class="pokemon-id"><%= `#${pokemon.id}` %> </p>
             <h2 class="pokemon-name">
-              <%= pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)
-              %>
+              <%= `${pokemon.name.charAt(0).toUpperCase()}${pokemon.name.slice(1)}` %>
             </h2>
+            <img class="pokemon-image" src="<%- pokemon.image %> "  alt="Picture of <%- pokemon.name %> " >
           </div>
           <%}) %>
         </div>
