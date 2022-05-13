@@ -10,15 +10,19 @@
   <body>
     <main>
       <div class="container">
+        <h1>Pokedex</h1>
         <div id="dex">
-          <h1>Pokedex</h1>
-        <% data.forEach((pokemon)=>{%>
-        <div class="poke-container">
-          <h2 class="pokemon-name"><%= pokemon.name %></h2>
+          <% if(dex.length == 0) {%>
+          <p style="text-align: center;"><%= 'Pokedex was not found' %></p>
+          <% } %> <% dex.forEach((pokemon)=>{%>
+          <div class="poke-container">
+            <h2 class="pokemon-name">
+              <%= pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)
+              %>
+            </h2>
+          </div>
+          <%}) %>
         </div>
-        <%}) %> 
-        </div>
-        
 
         <button id="more">More</button>
       </div>
