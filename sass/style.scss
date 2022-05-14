@@ -13,8 +13,10 @@
 body {
   margin: 0;
   padding: 0;
+  background-color: #1e1e1e;
+  color: white;
 
-  a{
+  a {
     text-decoration: none;
   }
 }
@@ -43,10 +45,10 @@ body {
 
   @media screen and (max-width: 425px) {
     grid-template-columns: 1fr 1fr;
-    gap: 0.5rem
+    gap: 0.5rem;
   }
 
-  @media screen and (min-width: 1440px){
+  @media screen and (min-width: 1440px) {
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   }
 
@@ -60,13 +62,22 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    transition: all 250ms ease-in-out;
+    background-color:#2a2a2a ;
+    color: white;
 
-    @media screen and (max-width: 425px){
+    @media screen and (max-width: 425px) {
       height: 40vh;
     }
 
     & > * {
       margin: 0.5rem 0;
+    }
+
+    &:hover {
+      // background: #d4d4d4;
+      background: #252525;
+      transform: scale(1.05);
     }
 
     .pokemon-image {
@@ -101,6 +112,7 @@ body {
 
   &.normal {
     background-color: #e1e1e1;
+    color: black;
   }
   &.fighting {
     background-color: #d56723;
@@ -108,9 +120,9 @@ body {
   }
   &.flying {
     background-color: #b2b2b2;
-    color: white;
+    color: black;
   }
-  &.poison{
+  &.poison {
     background-color: #b97fc9;
     color: white;
   }
@@ -144,9 +156,11 @@ body {
   }
   &.grass {
     background-color: #92ff84;
+    color: black;
   }
   &.electric {
     background-color: #fff56b;
+    color: black;
   }
   &.psychic {
     background-color: #f366b9;
@@ -168,10 +182,9 @@ body {
   }
 }
 
-#moreBtn{
+#moreBtn {
   padding: 2rem;
   background-color: #a82828;
   color: white;
   border-radius: 10px;
-  
 }

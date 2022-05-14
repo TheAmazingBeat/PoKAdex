@@ -1,5 +1,4 @@
 const axios = require('axios');
-// const fetch = require('node-fetch');
 const express = require('express');
 const router = express.Router();
 
@@ -25,7 +24,6 @@ const allTypes = [
 ];
 
 async function getPokedexData(offset) {
-  if (!isNaN(offset)) offset = 0;
   try {
     const pokeData = await axios.get(
       `https://pokeapi.co/api/v2/pokemon?limit=20&offset=${offset}`
@@ -56,7 +54,7 @@ async function getPokemon(pokeUrl) {
     const pokemon = {
       id: p.id,
       name: p.name,
-      image: p.sprites.other.home.front_default,
+      image: p.sprites.other['official-artwork'].front_default,
       typeArray: p.types,
     };
     return pokemon;

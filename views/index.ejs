@@ -1,21 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pokedex</title>
-    <link rel="stylesheet" href="styles/style.css" />
+<%- include('header') %>
+<link rel="stylesheet" href="/styles/style.css">
+    <title>PoKAdex</title>
   </head>
   <body>
     <main>
       <div class="container">
-        <h1>Pokedex</h1>
+        <h1>PoKAdex</h1>
         <div id="dex">
           <% if(dex.length == 0) {%>
           <p style="text-align: center"><%= 'Pokedex was not found' %></p>
           <% } %> <% dex.forEach((pokemon)=>{%>
-          <div class="poke-container">
+          <a href="/pokemon/<%- pokemon.name %> " class="poke-container">
             <p class="pokemon-id"><%= `#${pokemon.id}` %></p>
             <h2 class="pokemon-name">
               <%=
@@ -35,11 +30,11 @@
               <div class="type <%- whatType %>"><%= t.type.name %></div>
               <% }) %>
             </div>
-          </div>
+          </a>
           <%}) %>
 
-          <% offset += 20 %>
-          <a href="/<%- offset %>" id="moreBtn"> More ></a>
+          <%  %>
+          <a href="/<%- parseInt(offset) + 20 %>" id="moreBtn"> More ></a>
         </div>
 
         
