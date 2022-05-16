@@ -21,9 +21,7 @@ router.get('/pokemon/:name', async (req, res) => {
   res.render('pokemon', {
     data: pokemonData,
     id: pokemonData.id,
-    name: `${pokemonData.name.charAt(0).toUpperCase()}${pokemonData.name.slice(
-      1
-    )}`,
+    name: pokemonData.name,
     imageURL: pokemonData.sprites.other['official-artwork'].front_default,
   });
 });

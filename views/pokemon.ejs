@@ -1,13 +1,17 @@
 <%- include('header') %> 
 
 <title>PoKAdex</title>
+<link rel="stylesheet" href="/styles/pokemon.css">
 </head>
 <body>
   <main>
     <div class="container">
-      <p class="pokemon-id">#<%= id %> </p>
-      <h1 class="pokemon-name"><%= name %> </h1>
-      <img src="<%- imageURL %> " alt="" class="pokemon-image">
+      <div class="poke-details">
+        <p class="pokemon-id">#<%= id %> </p>
+        <h1 class="pokemon-name"><%= name %> </h1>
+        <img src="<%- imageURL %> " alt="" class="pokemon-image">
+      </div>
+      
     </div>
   </main>
 </body>
