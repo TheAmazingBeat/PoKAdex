@@ -10,17 +10,21 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/', pokedex);
+app.get('/', (req, res) => {
+  // Temporary -- adding more features later on, not just pokedex
+	res.redirect('/pokedex');
+});
 
-app.get('/:offset', pokedex);
+app.get('/pokedex/', pokedex);
+app.get('/pokedex/:offset', pokedex);
 
-app.get('/pokemon', pokemon)
+app.get('/pokemon', pokemon);
 
 app.get('/pokemon/:name', pokemon);
 
-app.get('/pokedex/:gen', pokedex);
+app.get('/pokedex/gen/:gen', pokedex);
 
 const PORT = 3000;
 app.listen(process.env.PORT || PORT, () => {
-  console.log(`Server is running at http://localhost:${PORT}`);
+	console.log(`Server is running at http://localhost:${PORT}`);
 });

@@ -63,7 +63,7 @@ async function getPokemon(pokeUrl) {
 	}
 }
 
-router.get('/', async (req, res) => {
+router.get('/pokedex', async (req, res) => {
 	res.render('index', {
 		dex: await getPokedexData(20),
 		types: allTypes,
@@ -71,7 +71,7 @@ router.get('/', async (req, res) => {
 	});
 });
 
-router.get('/:offset', async (req, res) => {
+router.get('/pokedex/:offset', async (req, res) => {
 	const off = req.params.offset;
 	res.render('index', {
 		dex: await getPokedexData(20, off),
@@ -92,11 +92,12 @@ async function getGenerationData(genID) {
 	}
 }
 
-router.get('/pokedex/:gen', async (req, res) => {
+router.get('/pokedex/gen/:gen', async (req, res) => {
 	const off = req.params.offset;
 	const genId = req.params.gen;
+	const genData = await getGenerationData(genId)
 	res.render('index', {
-		dex: await getGenerationData(genId).pokemon_species,
+		dex: genData.pokemon_species,
 		types: allTypes,
 	});
 });
