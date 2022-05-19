@@ -24,6 +24,8 @@ app.get('/pokemon/:name', pokemon);
 
 app.get('/pokedex/gen/:gen', pokedex);
 
+app.get('/pokedex/game/:gameName', pokedex)
+
 const PORT = 3000;
 app.listen(process.env.PORT || PORT, () => {
 	console.log(`Server is running at http://localhost:${PORT}`);
