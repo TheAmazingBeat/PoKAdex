@@ -1,0 +1,42 @@
+.poke-details {
+  text-align: center;
+}
+.poke-details img {
+  width: 356.25px;
+}
+
+.pokemon-stats {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  gap: 1rem;
+}
+
+.stat {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.stat .stat-name {
+  text-transform: capitalize;
+  margin-right: 0.25rem;
+}
+.stat .stat-bar {
+  width: 16rem;
+  height: 1.5rem;
+  background-color: lightgrey;
+  border: 0.25px solid #f1f1f1;
+  border-radius: 10px;
+  margin-left: 0.25rem;
+}
+.stat .stat-bar .inner {
+  height: 100%;
+  background-color: lightgreen;
+  border-radius: inherit;
+  display: grid;
+  place-items: center;
+  color: black;
+}
+
+/*# sourceMappingURL=pokemon.css.map */

@@ -1,0 +1,47 @@
+<%- include('header') %>
+<link rel="stylesheet" href="/styles/style.css">
+<title>PoKAdex</title>
+</head>
+
+<body>
+  <main>
+    <div class="container">
+      <h1>PoKAdex</h1>
+      <div id="dex">
+        <% if(dex.length == 0) {%>
+        <p style="text-align: center"><%= 'Pokedex was not found' %></p>
+        <% } %> <%for(let i = 0; i < dex.length; i++){%>
+        <a href="/pokemon/<%- dex[i].name %> " class="poke-container">
+          <p class="pokemon-id"><%= `#${dex[i].id}` %></p>
+          <h2 class="pokemon-name">
+            <%= dex[i].name %>
+          </h2>
+          <img class="pokemon-image" src="<%- dex[i].image %> " alt="Picture of <%- dex[i].name %> " loading="lazy" />
+          <div class="pokemon-types">
+            <% dex[i].typeArray.forEach(t => { %> <% let whatType = '' %> <%
+              types.forEach(element => { %> <% if(element == t.type.name)
+              whatType = element; %> <% }) %>
+            <div class="type <%- whatType %>"><%= t.type.name %></div>
+            <% }) %>
+          </div>
+        </a>
+        <%} %>
+
+        <% if(offset != 'none') {%>
+          <a href="/pokedex/<%- parseInt(offset) + 20 %>" id="moreBtn"> More ></a>
+        <%} %>
+      </div>
+          <div class="pagination-btn">
+            <button>Prev</button>
+            <% for(let i = 0; i < Math.ceil(dex.length/20); i++){ %>
+              <button><%= i+1 %></button>
+              <% } %>
+            <button>Next</button>
+          </div>
+
+
+    </div>
+  </main>
+</body>
+
+</html>
