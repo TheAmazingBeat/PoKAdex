@@ -20,21 +20,25 @@ async function getPokemonStat(pokemonName) {
 		const vagueStats = pokemonData.stats;
 
 		let stats = [];
-		vagueStats.forEach((i) => {
-			stats.push({ name: i.stat.name, style_stat: `width:${i.base_stat}%;`, base_stat: i.base_stat });
+		vagueStats.forEach(i => {
+			stats.push({
+				name: i.stat.name,
+				style_stat: `width:${i.base_stat}%;`,
+				base_stat: i.base_stat
+			});
 		});
-    
-    function calculateTotal(){
-      let total = 0;
 
-      stats.forEach(stat => {
-        total += stat.base_stat;
-      })
+		function calculateTotal() {
+			let total = 0;
 
-      return total;
-    }
+			stats.forEach(stat => {
+				total += stat.base_stat;
+			});
 
-    // stats.push({name: total, base_stat: calculateTotal()})
+			return total;
+		}
+
+		// stats.push({name: total, base_stat: calculateTotal()})
 
 		return stats;
 	} catch (error) {
@@ -46,6 +50,9 @@ router.get('/pokemon/:name', async (req, res) => {
 	const name = req.params.name;
 	const pokemonData = await getPokemonData(name);
 	const stats = await getPokemonStat(name);
+	const types = pokemonData.types.map(t => {
+		return t.type.name;
+	});
 
 	res.render('pokemon', {
 		data: pokemonData,
@@ -53,6 +60,7 @@ router.get('/pokemon/:name', async (req, res) => {
 		name: pokemonData.name,
 		imageURL: pokemonData.sprites.other['official-artwork'].front_default,
 		stats: stats,
+		types: types
 	});
 });
 

@@ -11,6 +11,11 @@
         <p class="pokemon-id">#<%= id %> </p>
         <h1 class="pokemon-name"><%= name %> </h1>
         <img src="<%- imageURL %> " alt="" class="pokemon-image">
+        <div class="pokemon-types">
+          <% types.forEach(type => { %>
+            <div class="type <%- type %>"><%= type %></div>
+          <% }) %>
+        </div>
 
         <div class="pokemon-stats">
           <% stats.forEach(stat => { %>
