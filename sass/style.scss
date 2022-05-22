@@ -1,3 +1,5 @@
+$bg-dark-1: #1e1e1e;
+
 :root {
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -13,7 +15,7 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #1e1e1e;
+  background-color: $bg-dark-1;
   color: white;
 
   a {
@@ -24,6 +26,9 @@ body {
 .container {
   width: 90vw;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   @media screen and (max-width: 768px) {
     width: 95vw;
@@ -32,6 +37,65 @@ body {
   h1 {
     text-align: center;
     margin: 1rem 0;
+  }
+}
+
+.poke-modal-overlay {
+  width: 100vw;
+  height: 100%;
+  position: fixed;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.3);
+  top: 0;
+  left: 0;
+  // display: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 500ms ease;
+
+  &.show {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .poke-modal {
+    width: 80%;
+    min-height: 50vh;
+    margin: 5% auto 10%;
+    padding: 1.5rem;
+    border: white 1px solid;
+    border-radius: 10px;
+    background-color: $bg-dark-1;
+    text-transform: capitalize;
+
+    .pokemon-image {
+      max-width: calc(475px * 0.75);
+    }
+  }
+}
+
+.spinner {
+  border: #707070 0.5rem solid;
+  border-top: #a82828 0.5rem solid;
+  border-radius: 50%;
+  width: 4rem;
+  height: 4rem;
+  animation: spin 750ms ease-in-out infinite;
+  place-self: center;
+  opacity: 1;
+  pointer-events: all;
+
+  &.hide {
+    display: none;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 
@@ -63,7 +127,7 @@ body {
     align-items: center;
     justify-content: center;
     transition: all 250ms ease-in-out;
-    background-color:#2a2a2a ;
+    background-color: #2a2a2a;
     color: white;
 
     @media screen and (max-width: 425px) {
@@ -78,6 +142,7 @@ body {
       // background: #d4d4d4;
       background: #252525;
       transform: scale(1.05);
+      cursor: pointer;
     }
 
     .pokemon-image {
@@ -93,7 +158,6 @@ body {
       flex-direction: row;
       justify-content: center;
       align-items: center;
-      
 
       @media screen and (max-width: 425px) {
         flex-direction: column;
@@ -102,7 +166,7 @@ body {
   }
 }
 
-.pokemon-name{
+.pokemon-name {
   text-transform: capitalize;
 }
 
@@ -188,9 +252,22 @@ body {
   }
 }
 
-#moreBtn {
-  padding: 2rem;
-  background-color: #a82828;
-  color: white;
-  border-radius: 10px;
+.pagination-buttons {
+  .page-button {
+    padding: 0.2rem 0.5rem;
+    background-color: #a82828;
+    color: white;
+    border-radius: 10px;
+    border: 0;
+
+    &:hover{
+      cursor: pointer;
+      opacity: 0.75;
+    }
+  }
+}
+
+.hide{
+  opacity: 0;
+  pointer-events: all;
 }
