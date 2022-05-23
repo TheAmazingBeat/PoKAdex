@@ -9,206 +9,234 @@ $red-1: #820000;
 $red-2: #a82828;
 
 :root {
-  font-family: Arial, Helvetica, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 }
 
 *,
 *::before,
 *::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  padding: 0;
-  background-color: $bg-dark-1;
-  color: white;
+	margin: 0;
+	padding: 0;
+	background-color: $bg-dark-1;
+	color: white;
 
-  a {
-    text-decoration: none;
-  }
+	a {
+		text-decoration: none;
+	}
 }
 
 .container {
-  width: 90vw;
-  margin: 2.5% auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+	width: 90vw;
+	margin: 2.5% auto;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 
-  @media screen and (max-width: 768px) {
-    width: 95vw;
-  }
+	@media screen and (max-width: 768px) {
+		width: 95vw;
+	}
 
-  h1 {
-    text-align: center;
-    margin: 1rem 0;
-  }
+	h1 {
+		text-align: center;
+		margin: 1rem 0;
+	}
 }
 
 .poke-modal-overlay {
-  width: 100vw;
-  height: 100%;
-  position: fixed;
-  z-index: 1;
-  background: rgba(0, 0, 0, 0.3);
-  top: 0;
-  left: 0;
-  // display: none;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 500ms ease;
+	width: 100vw;
+	height: 100%;
+	position: fixed;
+	z-index: 1;
+	background: rgba(0, 0, 0, 0.3);
+	top: 0;
+	left: 0;
+	// display: none;
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 500ms ease;
 
-  &.show {
-    opacity: 1;
-    pointer-events: all;
-  }
+	&.show {
+		opacity: 1;
+		pointer-events: all;
+	}
 
-  .poke-modal {
-    width: 80%;
-    min-height: 50vh;
-    margin: 5% auto 10%;
-    padding: 1.5rem;
-    border: $border 1px solid;
-    border-radius: 10px;
-    background-color: $bg-dark-1;
-    text-transform: capitalize;
+	.poke-modal {
+		width: 80%;
+		min-height: 50vh;
+		margin: 5% auto 10%;
+		padding: 1.5rem;
+		border: $border 1px solid;
+		border-radius: 10px;
+		background-color: $bg-dark-1;
+		text-transform: capitalize;
 
-    .pokemon-image {
-      max-width: calc(475px * 0.75);
+		.pokemon-image {
+			max-width: calc(475px * 0.75);
 
-      @media screen and (max-width: 425px) {
-        max-width: calc(475px * 0.25);
-      }
-    }
-  }
+			@media screen and (max-width: 425px) {
+				max-width: calc(475px * 0.25);
+			}
+		}
+	}
 }
 
 .spinner {
-  border: $spinner-1 0.5rem solid;
-  border-top: $spinner-2 0.5rem solid;
-  border-radius: 50%;
-  width: 4rem;
-  height: 4rem;
-  animation: spin 750ms ease-in-out infinite;
-  place-self: center;
-  opacity: 1;
-  pointer-events: all;
+	border: $spinner-1 0.5rem solid;
+	border-top: $spinner-2 0.5rem solid;
+	border-radius: 50%;
+	width: 4rem;
+	height: 4rem;
+	margin: 2rem;
+	animation: spin 750ms ease-in-out infinite;
+	place-self: center;
+	opacity: 1;
+	pointer-events: all;
 
-  &.hide {
-    display: none;
-  }
+	&.hide {
+		display: none;
+	}
 }
 
 @keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
 }
 
 #dex {
-  width: 100%;
-  display: grid;
-  place-items: center;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 1rem;
-  margin: 2rem 0;
+	width: 100%;
+	display: grid;
+	place-items: center;
+	grid-template-columns: 1fr 1fr 1fr;
+	gap: 1rem;
+	margin: 2rem 0;
 
-  @media screen and (max-width: 425px) {
-    grid-template-columns: 1fr 1fr;
-    gap: 0.5rem;
-  }
+	@media screen and (max-width: 425px) {
+		grid-template-columns: 1fr 1fr;
+		gap: 0.5rem;
+	}
 
-  @media screen and (min-width: 1440px) {
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-  }
+	@media screen and (min-width: 1440px) {
+		grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+	}
 
-  .poke-container {
-    height: max-content;
-    width: 100%;
-    text-align: center;
-    border: 0.5px solid $border;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    transition: all 200ms ease-in-out;
-    background-color: $bg-dark-2;
-    color: white;
+	.poke-container {
+		height: max-content;
+		width: 100%;
+		text-align: center;
+		border: 0.5px solid $border;
+		border-radius: 10px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		transition: all 200ms ease-in-out;
+		background-color: $bg-dark-2;
+		color: white;
 
-    @media screen and (max-width: 425px) {
-      height: 40vh;
-    }
+		@media screen and (max-width: 425px) {
+			height: 40vh;
+		}
 
-    & > * {
-      margin: 0.5rem 0;
-    }
+		& > * {
+			margin: 0.5rem 0;
+		}
 
-    &:hover {
-      // background: #d4d4d4;
-      background: #252525;
-      transform: scale(1.05);
-      cursor: pointer;
-    }
+		&:hover {
+			// background: #d4d4d4;
+			background: #252525;
+			transform: scale(1.05);
+			cursor: pointer;
+		}
 
-    .pokemon-image {
-      max-width: 120px;
+		.pokemon-image {
+			max-width: 120px;
 
-      @media screen and (max-width: 425px) {
-        max-width: 80px;
-      }
-    }
+			@media screen and (max-width: 425px) {
+				max-width: 80px;
+			}
+		}
 
-    .pokemon-types {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
+		.pokemon-types {
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+			align-items: center;
 
-      @media screen and (max-width: 425px) {
-        flex-direction: column;
-      }
-    }
-  }
+			@media screen and (max-width: 425px) {
+				flex-direction: column;
+			}
+		}
+	}
 }
 
 .pokemon-name {
-  text-transform: capitalize;
+	text-transform: capitalize;
+}
+
+.game-selection {
+	margin: 1rem 0;
+  background-color: $bg-dark-2;
+  border-radius: 10px;
+  padding: 1rem;
+
+  select{
+    border: 0;
+    border-radius: 5px;
+    outline: none;
+    color: white;
+    background-color: $bg-dark-1;
+    padding: 0.2rem;
+  }
+
+  option{
+    outline: none;
+    border: 0;
+  }
+
+	select,
+	option {
+		text-transform: capitalize;
+	}
 }
 
 .pagination-buttons {
-  .page-button {
-    padding: 0.2rem 0.5rem;
-    background-color: $red-2;
-    color: white;
-    border-radius: 5px;
-    border: 0;
-    width: 2rem;
-    margin: 0 0.25rem;
-    transition: all 250ms ease;
+	margin: 1rem 0;
+	.page-button {
+		padding: 0.2rem 0.5rem;
+		background-color: $red-2;
+		color: white;
+		border-radius: 5px;
+		border: 0;
+		width: 2rem;
+		margin: 0 0.25rem;
+		transition: all 250ms ease;
 
-    &:hover {
-      cursor: pointer;
-      opacity: 0.75;
-    }
+		&:hover {
+			cursor: pointer;
+			opacity: 0.75;
+		}
 
-    &.active {
-      background-color: $red-1;
+		&.active {
+			background-color: $red-1;
 
-      &:hover {
-        background-color: #820000;
-      }
-    }
-  }
+			&:hover {
+				background-color: #820000;
+			}
+		}
+	}
 }
 
 .hide {
-  opacity: 0;
-  pointer-events: all;
+	opacity: 0;
+	pointer-events: all;
 }

@@ -160,6 +160,7 @@ body a {
   border-radius: 50%;
   width: 4rem;
   height: 4rem;
+  margin: 2rem;
   animation: spin 750ms ease-in-out infinite;
   place-self: center;
   opacity: 1;
@@ -247,6 +248,32 @@ body a {
   text-transform: capitalize;
 }
 
+.game-selection {
+  margin: 1rem 0;
+  background-color: #2a2a2a;
+  border-radius: 10px;
+  padding: 1rem;
+}
+.game-selection select {
+  border: 0;
+  border-radius: 5px;
+  outline: none;
+  color: white;
+  background-color: #1e1e1e;
+  padding: 0.2rem;
+}
+.game-selection option {
+  outline: none;
+  border: 0;
+}
+.game-selection select,
+.game-selection option {
+  text-transform: capitalize;
+}
+
+.pagination-buttons {
+  margin: 1rem 0;
+}
 .pagination-buttons .page-button {
   padding: 0.2rem 0.5rem;
   background-color: #a82828;
