@@ -82,11 +82,15 @@ async function getGameList() {
 
 		for (let i = 0; i < gameList.length; i++) {
 			// Multiple Regions in one game
-			if (gameList[i].pokedex.length > 0) {
-				for(let p = 0; p < gameList[i].pokedex; p++){
-          gameList.splice(i, 1)
-          gameList.splice(i, 0, {name: gameList[i].name, pokedex: gameList[i].pokedex[p]})
-        }
+			if (gameList[i].pokedex.length > 1) {
+				const initialLength = gameList[i].pokedex.length;
+				for (let p = 0; p < initialLength; p++) {
+					gameList.splice(i, 0, {
+						name: gameList[i].name,
+						pokedex: gameList[i].pokedex[p],
+					});
+					if (p == initialLength-1) gameList.splice(i+p, 1);
+				}
 			}
 		}
 
