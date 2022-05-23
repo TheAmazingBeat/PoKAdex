@@ -1,4 +1,12 @@
+@use 'types';
+
 $bg-dark-1: #1e1e1e;
+$bg-dark-2: #2a2a2a;
+$border: #b5b5b5;
+$spinner-1: #707070;
+$spinner-2: #a82828;
+$red-1: #820000;
+$red-2: #a82828;
 
 :root {
   font-family: Arial, Helvetica, sans-serif;
@@ -25,7 +33,7 @@ body {
 
 .container {
   width: 90vw;
-  margin: 0 auto;
+  margin: 2.5% auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -63,20 +71,24 @@ body {
     min-height: 50vh;
     margin: 5% auto 10%;
     padding: 1.5rem;
-    border: white 1px solid;
+    border: $border 1px solid;
     border-radius: 10px;
     background-color: $bg-dark-1;
     text-transform: capitalize;
 
     .pokemon-image {
       max-width: calc(475px * 0.75);
+
+      @media screen and (max-width: 425px) {
+        max-width: calc(475px * 0.25);
+      }
     }
   }
 }
 
 .spinner {
-  border: #707070 0.5rem solid;
-  border-top: #a82828 0.5rem solid;
+  border: $spinner-1 0.5rem solid;
+  border-top: $spinner-2 0.5rem solid;
   border-radius: 50%;
   width: 4rem;
   height: 4rem;
@@ -120,14 +132,14 @@ body {
     height: max-content;
     width: 100%;
     text-align: center;
-    border: 0.5px solid #b5b5b5;
+    border: 0.5px solid $border;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    transition: all 250ms ease-in-out;
-    background-color: #2a2a2a;
+    transition: all 200ms ease-in-out;
+    background-color: $bg-dark-2;
     color: white;
 
     @media screen and (max-width: 425px) {
@@ -170,104 +182,33 @@ body {
   text-transform: capitalize;
 }
 
-.type {
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  margin: 0.5rem 0.25rem;
-  text-transform: capitalize;
-
-  @media screen and (max-width: 425px) {
-    margin: 0.25rem 0;
-  }
-
-  &.normal {
-    background-color: #e1e1e1;
-    color: black;
-  }
-  &.fighting {
-    background-color: #d56723;
-    color: white;
-  }
-  &.flying {
-    background-color: #b2b2b2;
-    color: black;
-  }
-  &.poison {
-    background-color: #b97fc9;
-    color: white;
-  }
-  &.ground {
-    background-color: #c49269;
-    color: white;
-  }
-  &.rock {
-    background-color: #a38c21;
-    color: white;
-  }
-  &.bug {
-    background-color: #729f3f;
-    color: white;
-  }
-  &.ghost {
-    background-color: #7b62a3;
-    color: white;
-  }
-  &.steel {
-    background-color: #9eb7b8;
-    color: white;
-  }
-  &.fire {
-    background-color: #ff7a7a;
-    color: white;
-  }
-  &.water {
-    background-color: #75a3ff;
-    color: white;
-  }
-  &.grass {
-    background-color: #92ff84;
-    color: black;
-  }
-  &.electric {
-    background-color: #fff56b;
-    color: black;
-  }
-  &.psychic {
-    background-color: #f366b9;
-    color: white;
-  }
-  &.ice {
-    background-color: #85f1ff;
-  }
-  &.dragon {
-    background-color: #8578e8;
-    color: white;
-  }
-  &.dark {
-    background-color: #707070;
-    color: white;
-  }
-  &.fairy {
-    background-color: #fdb9e9;
-  }
-}
-
 .pagination-buttons {
   .page-button {
     padding: 0.2rem 0.5rem;
-    background-color: #a82828;
+    background-color: $red-2;
     color: white;
-    border-radius: 10px;
+    border-radius: 5px;
     border: 0;
+    width: 2rem;
+    margin: 0 0.25rem;
+    transition: all 250ms ease;
 
-    &:hover{
+    &:hover {
       cursor: pointer;
       opacity: 0.75;
+    }
+
+    &.active {
+      background-color: $red-1;
+
+      &:hover {
+        background-color: #820000;
+      }
     }
   }
 }
 
-.hide{
+.hide {
   opacity: 0;
   pointer-events: all;
 }

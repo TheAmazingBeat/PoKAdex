@@ -1,10 +1,12 @@
 const app = document.querySelector('#app');
 const API_ROOT = `https://pokeapi.co/api/v2/`;
-const ITEMS_PER_PAGE = 50;
+const ITEMS_PER_PAGE = 54;
 let OFFSET = 0;
 let pokedex = [];
 
 window.onload = displayPokedex(OFFSET, ITEMS_PER_PAGE);
+
+// Closes modal when clicked outside of it
 window.onclick = (e) => {
   // console.log(e.target)
   const modal = document.querySelector('.poke-modal-overlay');
@@ -95,48 +97,121 @@ function createPokemonCard(pokemon, index) {
 }
 
 async function displayPokedex(offset, limit) {
+  // Deletes the pokemon cards in the current page
+  const existingDex = document.querySelector('#dex');
+  if (existingDex != null) document.querySelector('#dex').remove();
+
+  // Only get the data once
   if (pokedex.length <= 0) {
     const pokedexData = await getPokedexData();
     pokedex = pokedexData;
   }
 
-  let dexContainer;
-
-  if (dexContainer == undefined) {
-    dexContainer = document.createElement('div');
-    dexContainer.setAttribute('id', 'dex');
-  }
+  // Creates pokedex element
+  const dexContainer = document.createElement('div');
+  dexContainer.setAttribute('id', 'dex');
 
   // Hides the spinner once pokedex is loaded, but cards hasn't rendered
   const spinner = document.querySelector('.spinner');
   spinner.classList.toggle('hide');
 
+  // Display pokemon cards by page
   for (let i = offset; i < limit + offset; i++) {
+    // Have reached last pokemon
+    if (pokedex[i] == undefined) break;
+
     dexContainer.append(createPokemonCard(pokedex[i], i));
   }
 
+  // Create Pagination buttons
   function createPagination() {
     const totalPages = Math.ceil(pokedex.length / ITEMS_PER_PAGE);
     const pageButtons = document.createElement('div');
     pageButtons.classList.add('pagination-buttons');
+
+    function pageControl(controlType) {
+      const activePage = document.querySelector('.page-button.active');
+      const currentOffset = parseInt(activePage.dataset.offset);
+      const buttons = document.querySelectorAll('.page-number');
+
+      if (controlType == 'previous') {
+        if (currentOffset == 0) return;
+
+        for (let b = 0; b < buttons.length; b++) {
+          if (buttons[b].classList.contains('active')) {
+            buttons[b - 1].classList.add('active');
+            buttons[b].classList.remove('active');
+            break;
+          }
+        }
+        displayPokedex(currentOffset - ITEMS_PER_PAGE, ITEMS_PER_PAGE);
+      } else if (controlType == 'next') {
+        if (currentOffset == 864) return;
+
+        for (let b = 0; b < buttons.length; b++) {
+          if (buttons[b].classList.contains('active')) {
+            buttons[b + 1].classList.add('active');
+            buttons[b].classList.remove('active');
+            break;
+          }
+        }
+        displayPokedex(currentOffset + ITEMS_PER_PAGE, ITEMS_PER_PAGE);
+      }
+      // Shows spinner
+      spinner.classList.toggle('hide');
+
+      // activePage.classList.remove('active');
+    }
+
+    // Prev/Next Buttons
+    const prevButton = document.createElement('button');
+    prevButton.classList.add('page-button');
+    prevButton.classList.add('page-control');
+    prevButton.innerText = '<';
+    prevButton.onclick = () => {
+      pageControl('previous');
+    };
+    pageButtons.append(prevButton);
+
+    const nextButton = document.createElement('button');
+    nextButton.classList.add('page-button');
+    nextButton.innerText = '>';
+    nextButton.onclick = () => {
+      pageControl('next');
+    };
+
+    // Pages Buttons
     for (let b = 0; b < totalPages; b++) {
       const pageNum = b + 1;
+
       const button = document.createElement('button');
       button.classList.add('page-button');
+      button.classList.add('page-number');
+
+      if (pageNum == 1) button.classList.add('active');
       button.innerText = pageNum;
+      button.dataset.offset = OFFSET + limit * b;
+
       button.onclick = () => {
-        console.log('page clicked');
-        // Empty the pokedex
-        dexContainer.replaceChildren();
+        const activeBtn = document.querySelector('.page-button.active');
+        activeBtn.classList.remove('active');
+        button.classList.add('active');
+
         // Shows spinner
         spinner.classList.toggle('hide');
-        displayPokedex(OFFSET + (limit * pageNum - 1), ITEMS_PER_PAGE);
+
+        displayPokedex(button.dataset.offset, ITEMS_PER_PAGE);
       };
+
       pageButtons.append(button);
     }
+
+    pageButtons.append(nextButton);
+
     app.append(pageButtons);
   }
 
+  // Prevents multiple creation of pagination buttons
   if (document.querySelector('.pagination-buttons') == null) createPagination();
 
   app.append(dexContainer);
