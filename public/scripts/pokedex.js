@@ -1,3 +1,8 @@
+///////////////////////////////////////////////
+///////////////////////////////////////////////
+////////////  GLOBAL VARIABLES  ///////////////
+///////////////////////////////////////////////
+///////////////////////////////////////////////
 const app = document.querySelector('#app');
 const API_ROOT = `https://pokeapi.co/api/v2/`;
 const ITEMS_PER_PAGE = 54;
@@ -6,10 +11,7 @@ let pokedex = [];
 let pokemonGames = [];
 
 window.onload = () => {
-	createHeader();
-	createGameSelection();
-	createSpinner();
-	displayPokedex(OFFSET, ITEMS_PER_PAGE);
+	createUI();
 };
 
 // Closes modal when clicked outside of it
@@ -20,6 +22,18 @@ window.onclick = (e) => {
 	}
 };
 
+async function createUI() {
+	await createHeader();
+	await createGameSelection();
+	await createSpinner();
+	await displayPokedex(OFFSET, ITEMS_PER_PAGE);
+}
+
+///////////////////////////////////////////////
+///////////////////////////////////////////////
+/////////////  FETCHING DATA  /////////////////
+///////////////////////////////////////////////
+///////////////////////////////////////////////
 /**
  * Fetch pokedex from API
  * @param {String} gameURL
@@ -40,7 +54,8 @@ async function getPokedexData(gameURL) {
 				return await getPokemon(
 					`${API_ROOT}pokemon/${entry.pokemon_species.url.substring(
 						ID_INDEX
-					)}`
+					)}`,
+					entry.entry_number
 				);
 			})
 		);
@@ -51,7 +66,7 @@ async function getPokedexData(gameURL) {
 	}
 }
 
-async function getPokemon(pokeURL) {
+async function getPokemon(pokeURL, entryID) {
 	try {
 		const response = await fetch(pokeURL);
 
@@ -60,10 +75,11 @@ async function getPokemon(pokeURL) {
 		const pokeDetails = await response.json();
 
 		const pokemon = {
-			id: pokeDetails.id,
+			id: entryID,
 			name: pokeDetails.name,
 			image: pokeDetails.sprites.other['official-artwork'].front_default,
 			typeArray: pokeDetails.types,
+			stats: pokeDetails.stats,
 		};
 
 		return pokemon;
@@ -91,6 +107,25 @@ async function getGameList() {
 				})
 			)
 		);
+
+		function organizeGameList(gameList) {
+			for (let i = 0; i < gameList.length; i++) {
+				// Check if pokedex is empty
+				if (gameList[i].pokedex <= 0) gameList.splice(i, 1);
+
+				// Check if pokedexes are the same
+				for (let j = i + 1; j < gameList.length; j++) {
+					if (gameList[i].pokedex[0] == gameList[j].pokedex[0]) {
+						gameList[i] = {
+							name: `${gameList[i].name}, ${gameList[j].name}`,
+							pokedex: gameList[i].pokedex,
+						};
+						gameList.splice(j, 1);
+					}
+				}
+			}
+			return gameList;
+		}
 
 		for (let i = 0; i < gameList.length; i++) {
 			// Multiple Regions in one game
@@ -151,19 +186,7 @@ async function getGame(gameURL, name) {
 
 		const gameDetails = await response.json();
 
-    //TODO: Format names with & and spaces instead of -
-		// let formattedName = `${name.charAt(0).toUpperCase()}${name.slice(1)}`;
-    
-		// if (formattedName.indexOf('-') > -1) {
-		// 	formattedName = `${formattedName.substring(
-		// 		0,
-		// 		formattedName.indexOf('-')
-		// 	)} & ${formattedName.substring(
-		// 		formattedName.indexOf('-') + 1,
-		// 		formattedName.length
-		// 	)}`;
-		// }
-    // console.log(formattedName)
+		//TODO: Format names with & and spaces instead of dashes
 
 		const game = {
 			name: name,
@@ -178,35 +201,21 @@ async function getGame(gameURL, name) {
 	}
 }
 
-function organizeGameList(gameList) {
-	for (let i = 0; i < gameList.length; i++) {
-		// Check if pokedex is empty
-		if (gameList[i].pokedex <= 0) gameList.splice(i, 1);
-
-		// Check if pokedexes are the same
-		for (let j = i + 1; j < gameList.length; j++) {
-			if (gameList[i].pokedex[0] == gameList[j].pokedex[0]) {
-				gameList[i] = {
-					name: `${gameList[i].name}, ${gameList[j].name}`,
-					pokedex: gameList[i].pokedex,
-				};
-				gameList.splice(j, 1);
-			}
-		}
-	}
-	return gameList;
-}
-
-function createHeader() {
+///////////////////////////////////////////////
+///////////////////////////////////////////////
+/////////  CREATING DOM ELEMENTS  /////////////
+///////////////////////////////////////////////
+///////////////////////////////////////////////
+async function createHeader() {
 	const title = document.createElement('h1');
 	title.classList.add('page-title');
 	title.textContent = 'PoKAdex';
-	app.append(title);
+	app.prepend(title);
 }
 
 async function createGameSelection() {
 	pokemonGames = await getGameList();
-	console.log(pokemonGames);
+	// console.log(pokemonGames);
 
 	const selectContainer = document.createElement('div');
 	selectContainer.classList.add('game-selection');
@@ -240,7 +249,7 @@ async function createGameSelection() {
 	});
 
 	select.onchange = (opt) => {
-		// console.log(select.value)
+		// Resets pokedex
 		pokedex = [];
 		document.querySelector('.spinner').classList.toggle('hide');
 		const gameURL = `${API_ROOT}pokedex/${select.value}`;
@@ -248,7 +257,7 @@ async function createGameSelection() {
 	};
 
 	selectContainer.append(label, select);
-	app.prepend(selectContainer);
+	app.append(selectContainer);
 }
 
 /**
@@ -360,7 +369,6 @@ function createPokemonCard(pokemon, index) {
 	pokeContainer.onclick = () => {
 		displayPokemonModal(index);
 	};
-	// pokeContainer.onclick = displayPokemonModal(index);
 
 	const id = document.createElement('p');
 	id.classList.add('pokemon-id');
@@ -391,6 +399,11 @@ function createPokemonCard(pokemon, index) {
 	return pokeContainer;
 }
 
+///////////////////////////////////////////////
+///////////////////////////////////////////////
+//////////  DISPLAY DOM ELEMENTS  /////////////
+///////////////////////////////////////////////
+///////////////////////////////////////////////
 async function displayPokedex(offset, limit, gameURL) {
 	// Deletes the pokemon cards in the current page
 	const existingDex = document.querySelector('#dex');
@@ -418,7 +431,6 @@ async function displayPokedex(offset, limit, gameURL) {
 		dexContainer.append(createPokemonCard(pokedex[i], i));
 	}
 
-	// console.log(gameURL);
 	// Prevents multiple creation of pagination buttons
 	if (
 		gameURL != undefined ||
@@ -438,9 +450,48 @@ async function displayPokemonModal(pokeIndex) {
 	const modalHeader = document.querySelector('.modal-header');
 	const modalBody = document.querySelector('.modal-body');
 	const modalFooter = document.querySelector('.modal-footer');
+	// Empty the container
+	modalBody.textContent = '';
 
 	modalHeader.innerHTML = `<h2 class="pokemon-name">#${pokemon.id} - ${pokemon.name}</h2>`;
-	modalBody.innerHTML = `<img src="${pokemon.image}" alt="Picture of ${pokemon.name}" class="pokemon-image" loading="lazy">`;
+
+	const pokemonDetails = document.createElement('div');
+	pokemonDetails.classList.add('pokemon-details');
+
+	const pokeImage = document.createElement('img');
+	pokeImage.classList.add('pokemon-image');
+	pokeImage.setAttribute('src', pokemon.image);
+	pokeImage.setAttribute('alt', `Picture of ${pokemon.name}`);
+	pokeImage.setAttribute('loading', `lazy`);
+	pokemonDetails.append(pokeImage);
+
+	const pokeStats = document.createElement('div');
+	pokeStats.classList.add('pokemon-stats');
+
+	pokemon.stats.forEach((stat) => {
+		const statContainer = document.createElement('div');
+		statContainer.classList.add('stat-container');
+		const statName = document.createElement('span');
+		statName.classList.add('stat-name');
+		statName.innerText = stat.stat.name;
+
+		const statBar = document.createElement('div');
+		statBar.classList.add('stat-bar');
+
+		const innerBar = document.createElement('div');
+		innerBar.classList.add('inner');
+		innerBar.style.width = `${stat.base_stat}%`;
+		const statNum = document.createElement('span');
+		statNum.innerText = stat.base_stat;
+		innerBar.append(statNum);
+
+		statBar.append(innerBar);
+		statContainer.append(statName, statBar);
+		pokeStats.append(statContainer);
+	});
+	pokemonDetails.append(pokeStats);
+
+	modalBody.append(pokemonDetails);
 }
 
 app.innerHTML = `

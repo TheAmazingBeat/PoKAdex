@@ -1,9 +1,10 @@
 @use 'types';
+@use 'pokemon';
 
 $bg-dark-1: #1e1e1e;
 $bg-dark-2: #2a2a2a;
 $border: #b5b5b5;
-$spinner-1: #707070;
+$spinner-1: #ffffff;
 $spinner-2: #a82828;
 $red-1: #820000;
 $red-2: #a82828;
@@ -87,8 +88,9 @@ body {
 }
 
 .spinner {
-	border: $spinner-1 0.5rem solid;
-	border-top: $spinner-2 0.5rem solid;
+	border: $spinner-1 1rem solid;
+	border-top: $spinner-2 1rem solid;
+	border-left: $spinner-2 1rem solid;
 	border-radius: 50%;
 	width: 4rem;
 	height: 4rem;
