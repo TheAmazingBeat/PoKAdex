@@ -1,0 +1,28 @@
+{
+  "name": "pokedex",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheAmazingBeat/Pokedex.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TheAmazingBeat/Pokedex/issues"
+  },
+  "homepage": "https://github.com/TheAmazingBeat/Pokedex#readme",
+  "dependencies": {
+    "sass": "^1.51.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  }
+}
