@@ -179,12 +179,17 @@ body a {
 .poke-modal-overlay .poke-modal {
   width: 80%;
   min-height: 50vh;
-  margin: 5% auto 10%;
+  margin: 2% auto;
   padding: 1.5rem;
   border: #b5b5b5 1px solid;
   border-radius: 10px;
   background-color: #1e1e1e;
   text-transform: capitalize;
+  overflow-y: initial !important;
+}
+.poke-modal-overlay .poke-modal .modal-body {
+  height: 80vh;
+  overflow-y: auto;
 }
 .poke-modal-overlay .poke-modal .pokemon-image {
   max-width: 356.25px;

@@ -85,6 +85,7 @@ async function getPokemon(pokeURL, entryID) {
       image: pokeDetails.sprites.other['official-artwork'].front_default,
       typeArray: pokeDetails.types,
       stats: pokeDetails.stats,
+      locations: await getLocations(pokeDetails.location_area_encounters)
     };
 
     return pokemon;
@@ -101,8 +102,8 @@ async function getLocations(locationURL) {
 		const locations = await Promise.all(data.map(loc => {
 			return {
 				name: loc.location_area.name,
-				game: loc.version.name,
-				chance: loc.encounter_details.chance
+				game: loc.version_details,
+				// chance: loc.version_details.encounter_details.max_chance
 			}
 		}))
 		return locations
